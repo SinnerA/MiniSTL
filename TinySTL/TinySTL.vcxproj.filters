@@ -27,5 +27,11 @@
     <ClInclude Include="TypeTraits.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Iterator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
