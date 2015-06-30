@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3F973CE8-42E5-405F-9DED-0B4F9BF7E635}</ProjectGuid>
     <RootNamespace>TinySTL</RootNamespace>
+    <ProjectName>MiniSTL</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
