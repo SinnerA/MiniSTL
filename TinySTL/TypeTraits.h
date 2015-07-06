@@ -6,9 +6,10 @@ namespace STL{
 	struct _true_type{ };
 	struct _false_type{ };
 
-	/*萃取传入T类型的类型特征-----------------------------------------------------------*/
+	//萃取传入T类型的类型特性-----------------------------------------------------------
+	//每一个成员为_true_type，则表示这些类型都可以采用最快速的方式（例如memcpy）来进行拷贝或进行赋值
 
-	//自定义类型，都为_false_type
+	//自定义类型，都为_false_type，保守
 	template<class T>
 	struct _type_traits{
 		typedef _false_type has_trivial_default_constructor;
@@ -171,7 +172,7 @@ namespace STL{
 		typedef _true_type is_POD_type;
 	};
 
-	//指针
+	//原生指针的偏特化
 	template<class T>
 	struct _type_traits<T*>{
 		typedef _true_type has_trivial_default_constructor;

@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3F973CE8-42E5-405F-9DED-0B4F9BF7E635}</ProjectGuid>
     <RootNamespace>TinySTL</RootNamespace>
-    <ProjectName>MiniSTL</ProjectName>
+    <ProjectName>TinySTL</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -65,8 +65,11 @@
     <ClInclude Include="Alloc.h" />
     <ClInclude Include="Construct.h" />
     <ClInclude Include="Iterator.h" />
+    <ClInclude Include="List.h" />
+    <ClInclude Include="Test\TestUtil.h" />
     <ClInclude Include="TypeTraits.h" />
     <ClInclude Include="UninitializedFunctions.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
