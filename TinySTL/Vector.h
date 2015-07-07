@@ -1,10 +1,14 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
-#include <iostream>
 #include <algorithm>
-#include <memory>
-#include <cstddef>
+#include <type_traits>
+
+#include "Allocator.h"
+#include "Algorithm.h"
+#include "Iterator.h"
+#include "ReverseIterator.h"
+#include "UninitializedFunctions.h"
 
 namespace TinySTL{
 	template <class T, class Alloc = alloctor<T>> 
