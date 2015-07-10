@@ -1,5 +1,5 @@
-#ifndef ALLOCATOR_H
-#define ALLOCATOR_H
+#ifndef _ALLOCATOR_H_
+#define _ALLOCATOR_H_
 
 #include <cassert>
 #include <new>

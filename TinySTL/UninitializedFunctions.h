@@ -1,5 +1,5 @@
-#ifndef UNINTIALIZED_FUNCTIONS_H
-#define UNINTIALIZED_FUNCTIONS_H
+#ifndef _UNINTIALIZED_FUNCTIONS_H_
+#define _UNINTIALIZED_FUNCTIONS_H_
 
 #include "Construct.h"
 #include "TypeTraits.h"

@@ -1,5 +1,5 @@
-#ifndef CONSTRUCT_H
-#define CONSTRUCT_H
+#ifndef _CONSTRUCT_H_
+#define _CONSTRUCT_H_
 
 #include <new>         //使用placement new
 #include "TypeTraits.h"

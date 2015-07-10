@@ -1,5 +1,5 @@
-#ifndef TYPE_TRAIT_H
-#define TYPE_TRAIT_H
+#ifndef _TYPE_TRAIT_H_
+#define _TYPE_TRAIT_H_
 
 namespace STL{
 

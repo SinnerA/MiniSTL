@@ -42,5 +42,11 @@
     <ClInclude Include="Test\TestUtil.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Allocator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ReverseIterator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
