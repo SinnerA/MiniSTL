@@ -8,7 +8,7 @@ namespace TinySTL{
 	private:
 		enum EAlign{ALIGN = 8};                                              //小型区块的上调边界
 		enum EMaxBytes{MAXBYTES = 128};                                      //小型区块的上限，超过区块由malloc分配
-		enum ENFreeLists{NFREELISTS = (EMaxBytes::MAXBYTES / EAlign::ALIGN)};//free-lists的个数
+		enum ENFreeLists{NFREELISTS = (alloc::MAXBYTES / alloc::ALIGN)};//free-lists的个数
 		enum ENObjs{NOBJS = 20};                                             //每次增加的区块数
 	private:
 		//free-list节点
@@ -16,7 +16,7 @@ namespace TinySTL{
 			union obj* next;
 			char clien[1];
 		};
-		static obj* free_list[ENFreeLists::NFREELISTS];
+		static obj* free_list[alloc::NFREELISTS];
 	private:
 		static char* start_free;//内存池起始位置
 		static char* end_free;  //内存池结束位置
@@ -24,11 +24,11 @@ namespace TinySTL{
 	private:
 		//将bytes上调至8的倍数
 		static size_t ROUND_UP(size_t bytes){
-			return ((bytes + EAlign::ALIGN - 1) & ~(EAlign::ALIGN - 1));
+			return ((bytes + alloc::ALIGN - 1) & ~(alloc::ALIGN - 1));
 		}
 		//根据需求大小，决定使用第n个free-list，n从0开始计算
 		static size_t FREELIST_INDEX(size_t bytes){
-			return ((bytes + EAlign::ALIGN - 1) / (EAlign::ALIGN - 1));
+			return ((bytes + alloc::ALIGN - 1) / (alloc::ALIGN - 1));
 		}
 		//free-list没有可用区块时，将从内存池申请获得新的区块（由chunk_alloc完成）
 		//返回一个区块给调用者，并可能在此free-list中新增一定数量新的区块
@@ -45,12 +45,12 @@ namespace TinySTL{
 	char *alloc::start_free = 0;
 	char *alloc::end_free = 0;
 	size_t alloc::heap_size = 0;
-	alloc::obj *alloc::free_list[alloc::ENFreeLists::NFREELISTS] = {
+	alloc::obj *alloc::free_list[alloc::NFREELISTS] = {
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 	};//end of class alloc
 	
 	void *alloc::allocate(size_t bytes){
-		if(bytes > EMaxBytes::MAXBYTES){
+		if(bytes > alloc::MAXBYTES){
 			//调用第一级配置器
 			return malloc(bytes);
 		}
@@ -67,7 +67,7 @@ namespace TinySTL{
 		}
 	}
 	void alloc::deallocate(void *ptr, size_t bytes){
-		if(bytes > EMaxBytes::MAXBYTES){
+		if(bytes > alloc::MAXBYTES){
 			//调用第一级配置器
 			free(ptr);
 		} else {
@@ -86,7 +86,7 @@ namespace TinySTL{
 	//返回一个大小为bytes的区块，并且可能会为list新增区块
 	//bytes已经上调至8的倍数
 	void *alloc::refill(size_t bytes){
-		size_t nobjs = ENObjs::NOBJS;
+		size_t nobjs = alloc::NOBJS;
 		
 		char* chunk = chunk_alloc(bytes, nobjs);//内存池中取
 		obj *result = 0;
@@ -149,7 +149,7 @@ namespace TinySTL{
 				//遍历free-list，寻找可用区块，进行回收
 				obj **my_free_list = 0;
 				obj *p = 0;
-				for(int i = 0; i < EMaxBytes::MAXBYTES; i += EAlign::ALIGN){
+				for(int i = 0; i < alloc::MAXBYTES; i += alloc::ALIGN){
 					my_free_list = free_list + FREELIST_INDEX(i);
 					p = *my_free_list;
 					if(p){

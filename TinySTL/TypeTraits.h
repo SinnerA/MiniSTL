@@ -163,15 +163,6 @@ namespace STL{
 		typedef _true_type is_POD_type;
 	};
 
-	template<>
-	struct _type_traits<char>{
-		typedef _true_type has_trivial_default_constructor;
-		typedef _true_type has_trivial_copy_constuctor;
-		typedef _true_type has_trivial_assignment_operator;
-		typedef _true_type has_trivial_destructor;
-		typedef _true_type is_POD_type;
-	};
-
 	//原生指针的偏特化
 	template<class T>
 	struct _type_traits<T*>{

@@ -1,36 +1,36 @@
 #ifndef _CONSTRUCT_H_
 #define _CONSTRUCT_H_
 
-#include <new>         //ä½¿ç”¨placement new
+#include <new>         //Ê¹ÓÃplacement new
 #include "TypeTraits.h"
 
 namespace TinySTL{
-	//ä½¿ç”¨placement newï¼Œåˆ›å»ºå¯¹è±¡æ—¶ä¸ä¼šåˆ†é…å†…å­˜ï¼Œè€Œæ˜¯åœ¨å·²æœ‰å†…å­˜ä¸­è°ƒç”¨æ„é€ å‡½æ•°åˆ›å»ºå¯¹è±¡
-	//åœ¨ptr1æ‰€æŒ‡çš„ç©ºé—´ä¸Šï¼Œåˆ›å»ºä¸€ä¸ªå€¼ä¸ºvalueçš„å¯¹è±¡
+	//Ê¹ÓÃplacement new£¬´´½¨¶ÔÏóÊ±²»»á·ÖÅäÄÚ´æ£¬¶øÊÇÔÚÒÑÓĞÄÚ´æÖĞµ÷ÓÃ¹¹Ôìº¯Êı´´½¨¶ÔÏó
+	//ÔÚptr1ËùÖ¸µÄ¿Õ¼äÉÏ£¬´´½¨Ò»¸öÖµÎªvalueµÄ¶ÔÏó
 	template<class T1, class T2>
 	inline void construct(T1 *ptr1, const T2& value){
 		new(ptr1) T1(value); 
 	}
 
-	//ç‰ˆæœ¬ä¸€ï¼šæ¥å—ä¸€ä¸ªæŒ‡é’ˆ
+	//°æ±¾Ò»£º½ÓÊÜÒ»¸öÖ¸Õë
 	template<class T>
 	inline void destory(T *ptr){
 		ptr->~T();
 	}
 
 	template<class ForwardIterator>
-	inline void _destory(ForwardIterator first, ForwardIterator last, _true_type){ }
+	inline void _destory(ForwardIterator first, ForwardIterator last, STL::_true_type){ }
 
 	template<class ForwardIterator>
-	inline void _destory(ForwardIterator first, ForwardIterator last, _false_type){
+	inline void _destory(ForwardIterator first, ForwardIterator last, STL::_false_type){
 		for(; first != last; ++first){
 			destory(&*first);
 		}
 	}
 
-	//ç‰ˆæœ¬äºŒï¼šæ¥å—ä¸¤ä¸ªè¿­ä»£å™¨
-	//åˆ¤æ–­æ˜¯å¦æ˜¯PODï¼ˆæ ‡é‡å‹åˆ«ï¼‰æˆ–ä¼ ç»ŸC structå‹åˆ«
-	//PODå‹åˆ«å¿…ç„¶åŒ…å«trivial destructorï¼ˆè‡ªå¸¦ææ„å‡½æ•°ï¼‰
+	//°æ±¾¶ş£º½ÓÊÜÁ½¸öµü´úÆ÷
+	//ÅĞ¶ÏÊÇ·ñÊÇPOD£¨±êÁ¿ĞÍ±ğ£©»ò´«Í³C structĞÍ±ğ
+	//PODĞÍ±ğ±ØÈ»°üº¬trivial destructor£¨×Ô´øÎö¹¹º¯Êı£©
 	template<class ForwardIterator>
 	inline void destory(ForwardIterator first, ForwardIterator last){
 		typedef typename _type_traits<T>::is_POD_type is_POD_type;
