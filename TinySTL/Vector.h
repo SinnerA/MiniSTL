@@ -1,17 +1,11 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
-#include <algorithm>
-#include <type_traits>
-
 #include "Allocator.h"
-#include "Algorithm.h"
-#include "Iterator.h"
-#include "ReverseIterator.h"
 #include "UninitializedFunctions.h"
 
 namespace TinySTL{
-	template <class T, class Alloc = alloctor<T>> 
+	template <class T, class Alloc = allocator<T>> 
 	class vector{
 	private:
 		T* start_;       //vector首元素
@@ -23,8 +17,8 @@ namespace TinySTL{
 		typedef T                            value_type;
 		typedef T*                           iterator;
 		typedef const T*                     const_iterator;
-		typedef reverse_iterator_t<T*>       reverse_iterator;
-		typedef reverse_iterator_t<const T*> const_reverse_iterator;
+		//typedef reverse_iterator_t<T*>       reverse_iterator;
+		//typedef reverse_iterator_t<const T*> const_reverse_iterator;
 		typedef iterator                     pointer;
 		typedef T&                           reference;
 		typedef const T&                     const_reference;
@@ -38,9 +32,9 @@ namespace TinySTL{
 		explicit vector(const size_type n, const value_type& value);
 		vector(const vector& v);
 		template <class InputIterator>
-		vector(InputItertor begin, InputIterator end);
+		vector(InputIterator begin, InputIterator end);
 		vector& operator=(const vector&);
-		~Vecotor(){ destoryAndDeallocateAll(); }
+		~vector(){ destoryAndDeallocateAll(); }
 
 		//比较相关
 		bool operator==(const vector&);
@@ -94,7 +88,7 @@ namespace TinySTL{
 			}
 		}
 		iterator insert(iterator position, const value_type& val);
-		void insert(iterator position, const size_type n, const type_value& val);
+		void insert(iterator position, const size_type& n, const value_type& val);
 		template <class InputIterator>
 		void insert(iterator position, InputIterator first, InputIterator last);
 		iterator erase(iterator position);
@@ -118,7 +112,7 @@ namespace TinySTL{
 		template <class InputIterator>
 		void allocateAndCopy(InputIterator first, InputIterator last){
 			start_ = dataAllocator::allocate(last - first);
-			finish_ = dataAllocator::uninitialized_copy(first, last, start_);
+			finish_ = TinySTL::uninitialized_copy(first, last, start_);
 			endOfStorge_ = finish_;
 		}
 
@@ -165,9 +159,9 @@ namespace TinySTL{
 	}
 	template <class T, class Alloc>
 	template <class InputIterator>
-	vector<T, Alloc>::vector(InputItertor begin, InputIterator end){
+	vector<T, Alloc>::vector(InputIterator begin, InputIterator end){
 		//处理指针和数字间的区别的函数
-		vector_aux(begin, end, typename std::is_integral<InputItertor>::type());
+		vector_aux(begin, end, typename std::is_integral<InputIterator>::type());
 	}
 	template <class T, class Alloc>
 	vector<T, Alloc>& vector<T, Alloc>::operator=(const vector& v){
@@ -294,7 +288,7 @@ namespace TinySTL{
 		}
 	}
 	template <class T, class Alloc>
-	void vector<T, Alloc>::insert(iterator position, const size_type n, const type_value& val){
+	void vector<T, Alloc>::insert(iterator position, const size_type& n, const value_type& val){
 		insert_aux(position, n, val, typename std::is_integral<size_type>::type());
 	}
 	template <class T, class Alloc>
@@ -303,7 +297,7 @@ namespace TinySTL{
 		insert_aux(position, first, last, typename std::is_integral<InputIterator>::type());
 	}
 	template <class T, class Alloc>
-	vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val){
+	typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val){
 		const iterator index = position - begin();
 		insert(position, 1, val);
 		return begin() + index;

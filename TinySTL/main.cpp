@@ -1,34 +1,21 @@
 #include <iostream>
 #include <memory>
-
-#include "Alloc.h"
+#include <string>
+ 
 #include "Allocator.h"
 #include "Construct.h"
-#include "UninitializedFunctions.h"
+#include "Vector.h"
 
 using namespace std;
 
 int main(){
 	cout << "Helo World" << endl;
-
-	/*
-	for(int i = 1; i <= 100000; ++i){
-		TinySTL::alloc::allocate(i % 128 * sizeof(int));
-		int *p  = TinySTL::allocator<int>::allocate();
-		TinySTL::allocator<int>::construct(p, i);
-		TinySTL::allocator<int>::destory(p);
-		TinySTL::allocator<int>::deallocate(p);
-	}
-	*/
 	
-	int* p = TinySTL::allocator<int>::allocate(100);
-	TinySTL::uninitialized_fill(p, p+100, 1);
-
-	int array[100];
-	TinySTL::uninitialized_fill_n(array, 100, 1);
-	for(int i = 0; i < 100; i++)
-		cout << array[i] << endl;
-	
+	int array[10] = {1,2,3,4,5,6,7,8,9,10};
+	TinySTL::vector<int> vec(array, array + 10);
+	for(int i = 0; i < 10; i++)
+		cout << vec[i] << ", ";
+	cout << endl;
 
 	getchar();
 	return 0;
