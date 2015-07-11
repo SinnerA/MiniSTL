@@ -1,7 +1,13 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
+#include <algorithm>
+#include <type_traits>
+
 #include "Allocator.h"
+#include "Algorithm.h"
+#include "Iterator.h"
+#include "ReverseIterator.h"
 #include "UninitializedFunctions.h"
 
 namespace TinySTL{
@@ -133,7 +139,7 @@ namespace TinySTL{
 		void reallocateAndFillN(iterator position, const size_type& n, const value_type& value);
 		size_type getNewCapacity(size_type len){
 			size_type oldCapacity = endOfStorge_ - start_;
-			auto res = TinySTL::max(oldCapacity, len);
+			auto res = max(oldCapacity, len);
 			size_type newCapacity  = oldCapacity != 0 ? (oldCapacity + res) : len;
 			return newCapacity;
 		}
@@ -176,14 +182,14 @@ namespace TinySTL{
 	template <class T, class Alloc>
 	void vector<T, Alloc>::resize(size_type n, value_type val = value_type()){
 		if(n < size()){
-			dataAllocator::destory(finish_, n - size());
+			dataAllocator::destory(start_ + n, finish_);
 			finish_ = start_ + n;
 		} else if(n > size() && n < capacity()){
 			size_type lengthOfInsert = n - size();
 			finish_ = uninitialized_fill_n(finish_, lengthOfInsert, val);
 		} else if(n > capacity()){
 			size_type lengthOfInsert = n - size();
-			T* newStart = dataAllocator::allocate(getCapacity(lengthOfInsert));
+			T* newStart = dataAllocator::allocate(getNewCapacity(lengthOfInsert));
 			T* newFinish = TinySTL::uninitialized_copy(begin(), end(), newStart);
 			newFinish = TinySTL::uninitialized_fill_n(newFinish, lengthOfInsert, val);
 
@@ -275,7 +281,7 @@ namespace TinySTL{
 	void vector<T, Alloc>::insert_aux(iterator position, Integer n, const value_type& value, std::true_type){
 		assert(n != 0);
 		difference_type locationLeft = endOfStorge_ - finish_; //Ê£Óà´æ´¢¿Õ¼ä
-		defference_type locationNeed = n;                      //ÐèÒª´æ´¢¿Õ¼ä
+		difference_type locationNeed = n;                      //ÐèÒª´æ´¢¿Õ¼ä
 		if(locationLeft >= locationNeed){
 			iterator tempIter = end() - 1;
 			for(; tempIter - position >= 0; --tempIter){
@@ -284,7 +290,7 @@ namespace TinySTL{
 			TinySTL::uninitialized_fill_n(position, n, value);
 			finish_ += locationNeed;
 		} else{
-			reallocateAndFillN(positon, n, value);	
+			reallocateAndFillN(position, n, value);	
 		}
 	}
 	template <class T, class Alloc>
@@ -298,7 +304,7 @@ namespace TinySTL{
 	}
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::iterator vector<T, Alloc>::insert(iterator position, const value_type& val){
-		const iterator index = position - begin();
+		const auto index = position - begin();
 		insert(position, 1, val);
 		return begin() + index;
 	}
