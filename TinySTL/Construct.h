@@ -19,10 +19,10 @@ namespace TinySTL{
 	}
 
 	template<class ForwardIterator>
-	inline void _destory(ForwardIterator first, ForwardIterator last, STL::_true_type){ }
+	inline void _destory(ForwardIterator first, ForwardIterator last, _true_type){ }
 
 	template<class ForwardIterator>
-	inline void _destory(ForwardIterator first, ForwardIterator last, STL::_false_type){
+	inline void _destory(ForwardIterator first, ForwardIterator last, _false_type){
 		for(; first != last; ++first){
 			destory(&*first);
 		}

@@ -11,22 +11,22 @@ namespace TinySTL{
 	//因此，对POD型别采取最优效率的初值填写方法，而对non-POD采取最保险安全的做法
 
 	//uninitialized_copy------------------------------------------------------------------------------------------------
-	template<class InputerIterator, class ForwardIterator>
+	template<class InputIterator, class ForwardIterator>
 	ForwardIterator _uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, _true_type);
-	template<class InputerIterator, class ForwardIterator>
+	template<class InputIterator, class ForwardIterator>
 	ForwardIterator _uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, _false_type);
 
-	template<class InputerIterator, class ForwardIterator>
+	template<class InputIterator, class ForwardIterator>
 	ForwardIterator uninitialized_copy(InputIterator first, InputIterator last, ForwardIterator result){
-		typedef typename _type_traits<iterator_traits<InputerIterator>::value_type>::is_POD_type is_POD_type;
-		_uninitialized_copy_aux(first, last, is_POD_type());
+		typedef typename _type_traits<iterator_traits<InputIterator>::value_type>::is_POD_type is_POD_type;
+		_uninitialized_copy_aux(first, last, result, is_POD_type());
 	}
-	template<class InputerIterator, class ForwardIterator>
+	template<class InputIterator, class ForwardIterator>
 	ForwardIterator _uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, _true_type){
 		memcpy(result, first, (last - first) * sizeof(*first));
 		return result + (last - frist);
 	}
-	template<class InputerIterator, class ForwardIterator>
+	template<class InputIterator, class ForwardIterator>
 	ForwardIterator _uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, _false_type){
 		for(int i = 0;; first != last; ++first, ++i){
 			construct((result + i), *first);
@@ -65,7 +65,7 @@ namespace TinySTL{
 	template<class ForwardIterator, class Size, class T>
 	ForwardIterator uninitialized_fill_n(ForwardIterator first, Size n, const T& value){
 		typedef typename _type_traits<T>::is_POD_type is_POD_type;
-		_uninitialized_fill_n_aux(first, n, value, is_POD_type());
+		return _uninitialized_fill_n_aux(first, n, value, is_POD_type());
 	}
 	template<class ForwardIterator, class Size, class T>
 	ForwardIterator _uninitialized_fill_n_aux(ForwardIterator first, Size n, const T& value, _true_type){

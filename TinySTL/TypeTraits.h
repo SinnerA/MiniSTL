@@ -1,7 +1,7 @@
 #ifndef _TYPE_TRAIT_H_
 #define _TYPE_TRAIT_H_
 
-namespace STL{
+namespace TinySTL{
 
 	struct _true_type{ };
 	struct _false_type{ };
