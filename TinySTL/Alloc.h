@@ -8,7 +8,7 @@ namespace TinySTL{
 	private:
 		enum EAlign{ALIGN = 8};                                              //小型区块的上调边界
 		enum EMaxBytes{MAXBYTES = 128};                                      //小型区块的上限，超过区块由malloc分配
-		enum ENFreeLists{NFREELISTS = (alloc::MAXBYTES / alloc::ALIGN)};//free-lists的个数
+		enum ENFreeLists{NFREELISTS = (alloc::MAXBYTES / alloc::ALIGN)};     //free-lists的个数
 		enum ENObjs{NOBJS = 20};                                             //每次增加的区块数
 	private:
 		//free-list节点
