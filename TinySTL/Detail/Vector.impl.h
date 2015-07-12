@@ -33,13 +33,13 @@ namespace TinySTL{
 	//---------------------------ÈÝÆ÷ÈÝÁ¿Ïà¹Ø-----------------------------
 	template <class T, class Alloc>
 	void vector<T, Alloc>::resize(size_type n, value_type val = value_type()){
-		if(n < size()){
+		if(n < (size_type)size()){
 			dataAllocator::destory(start_ + n, finish_);
 			finish_ = start_ + n;
-		} else if(n > size() && n < capacity()){
+		} else if(n > (size_type)size() && n < (size_type)capacity()){
 			size_type lengthOfInsert = n - size();
 			finish_ = uninitialized_fill_n(finish_, lengthOfInsert, val);
-		} else if(n > capacity()){
+		} else if(n > (size_type)capacity()){
 			size_type lengthOfInsert = n - size();
 			T* newStart = dataAllocator::allocate(getNewCapacity(lengthOfInsert));
 			T* newFinish = TinySTL::uninitialized_copy(begin(), end(), newStart);
@@ -167,8 +167,9 @@ namespace TinySTL{
 		finish_ = endOfStorge_ = start_ + n;
 		dataAllocator::uninitialized_fill(start_, finish_, value);
 	}
+	template<class T, class Alloc>
 	template <class InputIterator>
-	void allocateAndCopy(InputIterator first, InputIterator last){
+	void vector<T, Alloc>::allocateAndCopy(InputIterator first, InputIterator last){
 		start_ = dataAllocator::allocate(last - first);
 		finish_ = TinySTL::uninitialized_copy(first, last, start_);
 		endOfStorge_ = finish_;
