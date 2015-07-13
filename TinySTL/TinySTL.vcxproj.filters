@@ -51,9 +51,21 @@
     <ClInclude Include="Detail\Vector.impl.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Test\VectorTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler\Profiler.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\VectorTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Profiler\Profiler.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
