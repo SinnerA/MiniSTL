@@ -79,6 +79,7 @@
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Detail\Alloc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Profiler\Profiler.cpp" />
     <ClCompile Include="Test\VectorTest.cpp" />
