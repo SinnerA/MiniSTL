@@ -6,7 +6,7 @@
 #include "UninitializedFunctions.h"
 #include "Allocator.h"
 #include "Iterator.h"
-#include "ReverseIterator.h"
+//#include "ReverseIterator.h"
 
 namespace TinySTL{
 	template<class T>
@@ -61,7 +61,7 @@ namespace TinySTL{
 			T* operator&(){ return &(operator*()); }
 			
 			template<class T>
-			friend bool operator==(const listIterator<T>& lhs, const listIterator<T>& rhs);
+			friend bool operator==(const listIterator<T>& rhs);
 			template<class T>
 			friend bool operator!=(const listIterator<T>& lhs, const listIterator<T>& rhs);
 		};//end of class listIterator
@@ -86,7 +86,7 @@ namespace TinySTL{
 	public:
 		typedef T                             value_type;
 		typedef listIterator<T>               iterator;
-		typedef reverse_iterator_t<iterator>  reverse_iterator;
+		//typedef reverse_iterator_t<iterator>  reverse_iterator;
 		typedef T&                            reference;
 		typedef size_t                        size_type;
 	private:
@@ -97,9 +97,14 @@ namespace TinySTL{
 			head.p = newNode();//一个空白节点
 			tail.p = head.p;
 		}
-		explicit list(size_type n, const value_type& val = value_type()){
-			
+	private:
+		nodePtr newNode(const T& val = T()){
+			nodePtr node = nodeAllocator::allocate();
+			node->data = val;
+			node->container = this;
+			node->next = nullptr;
+			return node;
 		}
-	}
+	};
 }
 #endif
