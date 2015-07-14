@@ -74,7 +74,7 @@ namespace TinySTL{
 	//---------------------------修改容器的相关操作-----------------------------
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator position){
-		erase(position, position + 1);
+		return erase(position, position + 1);
 	}
 	template <class T, class Alloc>
 	typename vector<T, Alloc>::iterator vector<T, Alloc>::erase(iterator first, iterator last){
@@ -84,6 +84,7 @@ namespace TinySTL{
 			auto temp = last - lenOfRemoved;
 			*temp = *(last++);
 		}
+		finish_ = finish_ - lenOfRemoved;
 		return first;
 	}
 	template <class T, class Alloc>
@@ -113,9 +114,9 @@ namespace TinySTL{
 	template <class T, class Alloc>
 	void vector<T, Alloc>::swap(vector& v){
 		if(&v != this){
-			std::swap(start_, v.start_);
-			std::swap(finish_, v.finish_);
-			std::swap(endOfStorge_, v.endOfStorge_);
+			TinySTL::swap(start_, v.start_);
+			TinySTL::swap(finish_, v.finish_);
+			TinySTL::swap(endOfStorge_, v.endOfStorge_);
 		}
 	}
 	template <class T, class Alloc>
@@ -221,7 +222,7 @@ namespace TinySTL{
 		difference_type locationLeft = endOfStorge_ - finish_; //剩余存储空间
 		difference_type locationNeed = last - first;		   //需要存储空间
 		if(locationLeft >= locationNeed){
-			iterator tmpIter = end() - 1;
+			iterator tempIter = end() - 1;
 			for(;tempIter - position >= 0; --tempIter){
 				*(tempIter + locationNeed) = *(tempIter);
 			}
