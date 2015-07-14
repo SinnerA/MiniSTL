@@ -165,7 +165,7 @@ namespace TinySTL{
 	void vector<T, Alloc>::allocateAndFillN(const size_type n, const value_type& value){
 		start_ = dataAllocator::allocate(n);
 		finish_ = endOfStorge_ = start_ + n;
-		dataAllocator::uninitialized_fill(start_, finish_, value);
+		TinySTL::uninitialized_fill(start_, finish_, value);
 	}
 	template<class T, class Alloc>
 	template <class InputIterator>
