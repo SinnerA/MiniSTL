@@ -28,7 +28,8 @@ namespace TinySTL{
 	}
 	template<class InputIterator, class ForwardIterator>
 	ForwardIterator _uninitialized_copy_aux(InputIterator first, InputIterator last, ForwardIterator result, _false_type){
-		for(int i = 0;; first != last; ++first, ++i){
+		int i = 0;
+		for(; first != last; ++first, ++i){
 			construct((result + i), *first);
 		}
 		return (result + i);
