@@ -63,7 +63,7 @@ namespace TinySTL{
 		difference_type capacity() const{ return endOfStorge_ - start_; }
 		bool empty(){ return start_ == finish_; }
 		void resize(size_type n, value_type val = value_type());
-		void reverse(size_type n);
+		void reserve(size_type n);
 		void shrink_to_fit();
 
 		//访问元素相关

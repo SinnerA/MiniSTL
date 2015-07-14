@@ -53,7 +53,7 @@ namespace TinySTL{
 		}
 	}
 	template <class T, class Alloc>
-	void vector<T, Alloc>::reverse(size_type n){
+	void vector<T, Alloc>::reserve(size_type n){
 		if(n < capacity())
 			return;
 		T* newStart = dataAllocator::allocate(n);
