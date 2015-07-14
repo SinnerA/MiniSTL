@@ -113,9 +113,9 @@ namespace TinySTL{
 	template <class T, class Alloc>
 	void vector<T, Alloc>::swap(vector& v){
 		if(&v != this){
-			TinySTL::swap(start_, v.start_);
-			TinySTL::swap(finish_, v.finish_);
-			TinySTL::swap(endOfStorge_, v.endOfStorge_);
+			std::swap(start_, v.start_);
+			std::swap(finish_, v.finish_);
+			std::swap(endOfStorge_, v.endOfStorge_);
 		}
 	}
 	template <class T, class Alloc>

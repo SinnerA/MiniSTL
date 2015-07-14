@@ -15,6 +15,10 @@ int main(){
 	//TinySTL::VectorTest::testCase5();
 	TinySTL::VectorTest::testCase6();
 	TinySTL::VectorTest::testCase7();
+	TinySTL::VectorTest::testCase8();
+	TinySTL::VectorTest::testCase9();
+	TinySTL::VectorTest::testCase10();
+	TinySTL::VectorTest::testCase11();
 
 	getchar();
 	return 0;

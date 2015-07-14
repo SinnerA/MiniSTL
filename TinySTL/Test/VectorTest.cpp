@@ -95,5 +95,57 @@ namespace TinySTL{
 			vec.reserve(20);
 			assert(vec.capacity() == 20);
 		}
+
+		//访问元素相关
+		void testCase8(){
+			std::vector<int> v1(10);
+			TinySTL::vector<int> v2(10);
+			for (int i = 0; i < 10; i++){
+				v1[i] = i;
+				v2[i] = i;
+			}
+			assert(TinySTL::Test::container_equal(v1, v2));
+
+			v1.front() = 99;
+			v2.front() = 99;
+			v1.back() = 100;
+			v2.back() = 100;
+			assert(TinySTL::Test::container_equal(v1, v2));
+		}
+
+		void testCase9(){
+			std::vector<int> v1(5);
+			TinySTL::vector<int> v2(5);
+
+			std::vector<int>::pointer p1 = v1.data();
+			TinySTL::vector<int>::pointer p2 = v2.data();
+			*p1 = 10; ++p1; *p1 = 20; p1[2] = 100;
+			*p2 = 10; ++p2; *p2 = 20; p2[2] = 100;
+
+			assert(TinySTL::Test::container_equal(v1, v2));
+		}
+
+		//修改容器相关操作
+		void testCase10(){
+			TinySTL::vector<int> foo(3, 100);  TinySTL::vector<int> savedFoo(foo);
+			TinySTL::vector<int> bar(2, 200);  TinySTL::vector<int> savedBar(bar);
+
+			foo.swap(bar);
+			assert(TinySTL::Test::container_equal(foo, savedBar));
+			assert(TinySTL::Test::container_equal(bar, savedFoo));
+		}
+
+		void testCase11(){
+			std::vector<std::string> v1;
+			TinySTL::vector<std::string> v2;
+
+			v1.push_back("hello world");
+			v2.push_back("hello world");
+			assert(TinySTL::Test::container_equal(v1, v2));
+
+			v1.pop_back();
+			v2.pop_back();
+			assert(TinySTL::Test::container_equal(v1, v2));
+		}
 	}
 }
