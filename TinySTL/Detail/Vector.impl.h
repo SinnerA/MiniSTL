@@ -251,7 +251,7 @@ namespace TinySTL{
 	template<class T, class Alloc>
 	typename vector<T, Alloc>::size_type vector<T, Alloc>::getNewCapacity(size_type len) const{
 		size_type oldCapacity = endOfStorge_ - start_;
-		auto res = max(oldCapacity, len);
+		size_type res = std::max(oldCapacity, len);
 		size_type newCapacity  = oldCapacity != 0 ? (oldCapacity + res) : len;
 		return newCapacity;
 	}
