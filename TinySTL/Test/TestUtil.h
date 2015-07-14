@@ -9,8 +9,8 @@ namespace TinySTL{
 	namespace Test{
 		template<class Container>
 		void print_container(Container& container, const std::string& name = ""){
-			std::cout << "Container " << name << ":";
-			for(auto first = begin(container); first != end(container); first++) //C++ 11新特性
+			std::cout << "Container " << name << ": ";
+			for(auto first = std::begin(container); first != std::end(container); first++) //C++ 11新特性
 				std::cout << *first << " ";
 			std::cout << std::endl;
 		}
