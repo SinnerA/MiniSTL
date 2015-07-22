@@ -81,24 +81,56 @@ namespace TinySTL{
 		//µü´úÆ÷
 		iterator begin() const;
 		iterator end() const;
-		const_iterator cbegin() const;
-		const_iterator cend() const;
-		iterator rbegin() const;
-		iterator rend() const;
-
-		//ÐÞ¸ÄÈÝÆ÷
-		void push_back(const value_type& val);
-		void push_front(const value_type& val);
-		void insert(iterator position, const value_type& val);
-		void insert(iterator position, size_type n, const value_type& val);
-		template <class InputIterator>
-		void insert(iterator position, InputIterator first, InputIterator last);
-		void erase(iterator position);
-		void erase(iterator first, iterator last);
+		const_iterator begin() const;
+		const_iterator end() const;
+		//reverse_iterator rbegin() const;
+		//reverse_iterator rend() const;
 
 		//·ÃÎÊÔªËØ
-		
+		reference front() const { return head.p->data; }
+		reference back() const { return tail.p->data; }
 
+		//ÈÝÁ¿
+		bool empty() const { return head == tail; }
+		size_type size() const;
+
+		//ÐÞ¸ÄÈÝÆ÷
+		void push_front(const value_type& val);
+		void pop_front();
+		void push_back(const value_type& val);
+		void pop_back();
+
+		void insert(iterator pos, const value_type& val);
+		void insert(iterator pos, size_type n, const value_type& val);
+		template <class InputIterator>
+		void insert(iterator pos, InputIterator first, InputIterator last);
+		void erase(iterator pos);
+		void erase(iterator first, iterator last);
+		void clear();
+
+		void swap(list& x);
+		
+		void splice(iterator pos, list& x);
+		void splice(iterator pos, list& x, iterator i);
+		void splice(iterator pos, list& x, iterator first, iterator last);
+
+		void remove(const value_type& val);
+		template <class Predicate>
+		void remove_if(Predicate pred);
+
+		void unique();
+		template <class BianryPredicate>
+		void unique(BianryPredicate binary_pred);
+
+		void merge(list& x);
+		template <class Compare>
+		void merge(list& x, Compare comp);
+
+		void sort();
+		template <class Compare>
+		void sort(Compare comp);
+
+		void reverse();
 	private:
 		nodePtr newNode(const T& val = T());
 	};
