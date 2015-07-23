@@ -42,8 +42,8 @@ namespace TinySTL{
 			listIterator operator++(int);
 			listIterator& operator--();
 			listIterator operator--(int);
-			T& operator*();
-			T* operator&();
+			T& operator*(){ return p->data; }
+			T* operator&(){ return &(operator*()); }
 			
 			template<class T>
 			friend bool operator==(const listIterator<T>& lhs, const listIterator<T>& rhs);
@@ -74,8 +74,8 @@ namespace TinySTL{
 		explicit list(size_type n, const value_type& val = value_type());
 		template<class InputIterator>
 		list(InputIterator first, InputIterator last);
-		list(const list&);
-		list& operator=(const list&);
+		list(const list& l);
+		list& operator=(const list& l);
 		~list();
 
 		//µü´úÆ÷
@@ -132,7 +132,12 @@ namespace TinySTL{
 
 		void reverse();
 	private:
+		//¸¨Öúº¯Êý
 		nodePtr newNode(const T& val = T());
+		void ctorAux(size_type n, const value_type& val, std::true_type);
+		template <class InputIterator>
+		void ctorAux(InputIterator first, InputIterator last, std::false_type);
+
 	};
 }
 #endif
