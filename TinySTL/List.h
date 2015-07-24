@@ -67,7 +67,7 @@ namespace TinySTL{
 		typedef size_t                              size_type;
 	private:
 		iterator head;
-		iterator tail;
+		iterator tail; //尾节点后一个位置，类似于end()
 	public:
 		//构造与拷贝赋值，析构
 		list();
@@ -88,7 +88,7 @@ namespace TinySTL{
 
 		//访问元素
 		reference front() const { return head.p->data; }
-		reference back() const { return tail.p->data; }
+		reference back() const { return tail.p->prev->data; }
 
 		//容量
 		bool empty() const { return head == tail; }

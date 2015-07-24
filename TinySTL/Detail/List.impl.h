@@ -269,7 +269,8 @@ namespace TinySTL{
 		this->insert(pos, x.begin(), x.end());
 		x.head.p = x.tail.p;
 	}
-	void splice(iterator pos, list& x, iterator first, iterator last){
+	template <class T>
+	void list<T>::splice(iterator pos, list& x, iterator first, iterator last){
 		if(first.p == last.p) return;
 		if(x.head.p == first.p){
 			x.head.p = last.p;
@@ -278,14 +279,14 @@ namespace TinySTL{
 			first.p->prev->next = last.p;
 			last.p->prev = first.p->prev;
 		}
-		auto xTailNode = last.p->prev;
-		if(pos.p = head.p){
+		nodePtr xTailNode = last.p->prev;
+		if(pos.p == head.p){
 			first.p->prev = nullptr;
 			xTailNode->next = head.p;
 			head.p->prev = xTailNode;
 			head.p = first.p;
 		} else {
-			auto posPrev = pos.p->prev;
+			nodePtr posPrev = pos.p->prev;
 			posPrev->next = first.p;
 			first.p->prev = posPrev;
 			xTailNode->next = pos.p;
@@ -294,8 +295,144 @@ namespace TinySTL{
 	}
 	template <class T>
 	void list<T>::splice(iterator pos, list& x, iterator i){
-		auto next = i;
+		iterator next = i;
 		this->splice(pos, x, ++next);
+	}
+	
+	template <class T>
+	void list<T>::remove(const value_type& val){
+		for(iterator it = begin(); it != end(); ){
+			if(*it == val)
+				it = erase(it);
+			else
+				++it;
+		}
+	}
+	template <class T>
+	template <class Predicate>
+	void list<T>::remove_if(Predicate pred){
+		for(iterator it = begin(); it != end();){
+			if(pred(*it))
+				it = erase(it);
+			else
+				++it;
+		}
+	}
+
+	template <class T>
+	void list<T>::unique(){
+		nodePtr curNode = head.p;
+		while(curNode != tail.p){
+			nodePtr nextNode = curNode->next;
+			if(curNode->data == nextNode->data){
+				if(nextNode == tail.p){
+					curNode->next = nullptr;
+					tail.p = curNode;
+				} else {
+					curNode->next = nextNode->next;
+					nextNode->next->prev = curNode;
+				}
+				deleteNode(nextNode);
+			} else {
+				curNode = nextNode;
+			}
+		}
+	}
+	template <class T>
+	template <class BianryPredicate>
+	void list<T>::unique(BianryPredicate binary_pred){
+		nodePtr curNode = head.p;
+		while(curNode != tail.p){
+			nodePtr nextNode = curNode->next;
+			if(binary_pred(curNode->data, nextNode->data)){
+				if(nextNode == tail.p){
+					curNode->next = nullptr;
+					tail.p = curNode;
+				} else {
+					curNode->next = nextNode->next;
+					nextNode->next->prev = curNode;
+				}
+				deleteNode(nextNode);
+			} else {
+				curNode = nextNode;
+			}
+		}
+	}
+
+	template <class T>
+	void list<T>::merge(list& x){
+		iterator it1 = begin(), it2 = x.begin();
+		while(it1 != end() && it2 != x.end()){
+			if(*it1 <= *it2){
+				++it1;
+			} else {
+				iterator temp = it2++;
+				this->splice(it1, x, temp);
+			}
+		}
+		if(it1 == end()){
+			this->splice(it1, x, it2, x.end());
+		}
+	}
+	template <class T>
+	template <class Compare>
+	void list<T>::merge(list& x, Compare comp){
+		iterator it1 = begin(), it2 = x.begin();
+		while(it1 != end() && it2 != x.end()){
+			if(comp(*it1, *it2)){
+				iterator temp = it2++;
+				this->splice(it1, x, temp);
+			} else {
+				++it1;
+			}
+		}
+		if(it1 == end()){
+			this->splice(it1, x, it2, x.end());
+		}
+	}
+
+	template <class T>
+	template <class Compare>
+	void list<T>::sort(Compare comp){
+		//空链表或只有一个元素
+		if(empty() || head.p->next == tail.p){
+			return;
+		}
+
+		list<T> carry;
+		list<T> counter[64]; //将处理完的2^fill个数存入cunter[64]中
+		int fill = 0;        //2^fill表示能处理数据的最大数目
+		while (!empty()){
+			carry.splice(carry.begin(), *this, begin()); //list中取一个数存入carry
+			int i = 0;
+			while (i < fill && !counter[i].empty()){
+				counter[i].merge(carry, comp); //将carry中的数据，和counter[i]链中原有数据合并
+				carry.swap(counter[i++]);      //交换carry和cunter[i]数据
+			}
+			carry.swap(counter[i]);
+			if (i == fill)
+				++fill;
+		}
+		for (int i = 0; i != fill; ++i){       //sort之后将数据统一
+			counter[i].merge(counter[i - 1], comp);
+		}
+		swap(counter[fill - 1]);
+	}
+	template <class T>
+	void list<T>::sort(){
+		sort(TinySTL::less<T>());
+	}
+
+	template <class T>
+	void list<T>::reverse(){
+		if(empty() || head.p->next == tail.p) return;
+		nodePtr curNode = head.p;
+		head.p = tail.p->prev;
+		head.p->prev = nullptr;
+		while(curNode != head.p){
+			nodePtr nextNode = curNode->next;
+			curNode->next = 
+		}
 	}
 }
 #endif
