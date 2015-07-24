@@ -100,12 +100,12 @@ namespace TinySTL{
 		void push_back(const value_type& val);
 		void pop_back();
 
-		void insert(iterator pos, const value_type& val);
+		iterator insert(iterator pos, const value_type& val);
 		void insert(iterator pos, size_type n, const value_type& val);
 		template <class InputIterator>
 		void insert(iterator pos, InputIterator first, InputIterator last);
-		void erase(iterator pos);
-		void erase(iterator first, iterator last);
+		iterator erase(iterator pos);
+		iterator erase(iterator first, iterator last);
 		void clear();
 
 		void swap(list& x);
@@ -134,10 +134,17 @@ namespace TinySTL{
 	private:
 		//¸¨Öúº¯Êý
 		nodePtr newNode(const T& val = T());
+		void deleteNode(nodePtr p);
+
 		void ctorAux(size_type n, const value_type& val, std::true_type);
 		template <class InputIterator>
 		void ctorAux(InputIterator first, InputIterator last, std::false_type);
-
+		
+		const_iterator changeIteratorToConstIterator(iterator& it)const;
+		
+		void insert_aux(iterator pos, size_type n, const value_type& val, std::true_type);
+		template <class InputIterator>
+		void insert_aux(iterator pos, InputIterator first, InputIterator last, std::false_type);
 	};
 }
 #endif
