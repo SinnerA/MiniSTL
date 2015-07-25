@@ -3,6 +3,8 @@
 
 #include <cstring>
 
+#include "Utility.h"
+
 namespace TinySTL{
 	//fill--------------------------------------------------------------------
 	template<class ForwardIterator, class T>

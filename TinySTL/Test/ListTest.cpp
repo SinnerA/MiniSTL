@@ -27,11 +27,25 @@ namespace TinySTL{
 		}
 
 		//µü´úÆ÷
+		void testCase2(){
+			
+		}
 
 		//·ÃÎÊÔªËØ
+		void testCase3(){
+			std::string arr[] = {"1", "2", "3"};
+			TinySTL::list<std::string> l1(std::begin(arr), std::end(arr));
+			assert(l1.front() == arr[0]);
+			assert(l1.back() == arr[2]);
+
+			l1.front() = "front";
+			l1.back() = "back";
+			assert(l1.front() == "front");
+			assert(l1.back() == "back");
+		}
 
 		//ÈİÁ¿
-		void testCase2(){
+		void testCase4(){
 			TinySTL::list<std::string> l1;
 			assert(l1.empty());
 			assert(l1.size() == 0);
@@ -40,6 +54,90 @@ namespace TinySTL{
 			TinySTL::list<std::string> l2(std::begin(arr), std::end(arr));
 			assert(!l2.empty());
 			assert(l2.size() == 3);
+		}
+
+		//ĞŞ¸ÄÈİÆ÷
+		void testCase5(){
+			std::list<int> l1;
+			TinySTL::list<int> l2;
+			for(int i = 0; i < 10; i++){
+				l1.push_front(i);
+				l2.push_front(i);
+			}
+			assert(TinySTL::Test::container_equal(l1, l2));
+			for(int i = 0; i < 10; i++){
+				l1.push_back(i);
+				l2.push_back(i);
+			}
+			assert(TinySTL::Test::container_equal(l1, l2));
+			for(int i = 0; i < 10; i++){
+				l1.pop_front();
+				l2.pop_front();
+			}
+			assert(TinySTL::Test::container_equal(l1, l2));
+			for(int i = 0; i < 10; i++){
+				l1.pop_back();
+				l2.pop_back();
+			}
+			assert(TinySTL::Test::container_equal(l1, l2));
+		}
+
+		void testCase6(){
+			std::list<int> l1;
+			TinySTL::list<int> l2;
+			
+			l1.insert(l1.begin(), 1);
+			l2.insert(l2.begin(), 1);
+			assert(TinySTL::Test::container_equal(l1, l2));
+
+			std::list<int>::iterator it1 = l1.begin();
+			TinySTL::list<int>::iterator it2 = l2.begin();
+			l1.insert(it1++, 10, 0);
+			l2.insert(it2++, 10, 0);
+			assert(TinySTL::Test::container_equal(l1, l2));
+
+			int arr[] = {1,2,3,4,5,6,7,8,9,10};
+			l1.insert(l1.end(), std::begin(arr), std::end(arr));
+			l2.insert(l2.end(), std::begin(arr), std::end(arr));
+			assert(TinySTL::Test::container_equal(l1, l2));
+		}
+
+		void testCase7(){
+			std::list<int> l1;
+			TinySTL::list<int> l2;
+			for(int i = 0; i < 10; i++){
+				l1.push_back(i);
+				l2.push_back(i);
+			}
+			l1.erase(l1.begin());
+			l1.erase(--l1.end());
+			l2.erase(l2.begin());
+			l2.erase(--l2.end());
+			assert(TinySTL::Test::container_equal(l1, l2));
+
+			l1.erase(++l1.begin(), --l1.end());
+			l2.erase(++l2.begin(), --l2.end());
+			assert(TinySTL::Test::container_equal(l1, l2));
+
+			l1.clear();
+			l2.clear();
+			assert(TinySTL::Test::container_equal(l1, l2));
+		}
+
+		void testCase8(){
+			TinySTL::list<int> l1, l2;
+			l1.push_back(1); l1.push_back(1); l1.push_back(1);
+			l2.push_back(2); l2.push_back(2);
+			TinySTL::list<int> savedL1 = l1, savedL2 = l2;
+
+			l1.swap(l2);
+			assert(TinySTL::Test::container_equal(savedL1, l2));
+			assert(TinySTL::Test::container_equal(savedL2, l1));
+
+			savedL1 = l1, savedL2 = l2;
+			TinySTL::swap(l1, l2);
+			assert(TinySTL::Test::container_equal(savedL1, l2));
+			assert(TinySTL::Test::container_equal(savedL2, l1));
 		}
 	}
 }
