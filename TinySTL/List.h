@@ -155,4 +155,6 @@ namespace TinySTL{
 		friend void operator!=(const list<T>& lhs, const list<T>& rhs);
 	};
 }
+
+#include "Detail\List.impl.h"
 #endif
