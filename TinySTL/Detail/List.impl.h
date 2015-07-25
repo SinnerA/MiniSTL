@@ -10,7 +10,7 @@ namespace TinySTL{
 		}
 		template <class T>
 		listIterator<T> listIterator<T>::operator++(int){
-			nodePtr res = *this;
+			listIterator<T> res = *this;
 			++*this;
 			return res;
 		}
@@ -65,8 +65,9 @@ namespace TinySTL{
 	void list<T>::ctorAux(InputIterator first, InputIterator last, std::false_type){
 		head.p = newNode();
 		tail.p = head.p;
-		for( ;first != last; ++first)
-			push_back(*head);
+		for(--last; last != first; --last)
+			push_front(*last);
+		push_front(*last);
 	}
 
 	template <class T>
@@ -84,6 +85,7 @@ namespace TinySTL{
 			insert(pos, val);
 		}
 	}
+	template <class T>
 	template <class InputIterator>
 	void list<T>::insert_aux(iterator pos, InputIterator first, InputIterator last, std::false_type){
 		for(--last; last != first; --last){
@@ -102,21 +104,22 @@ namespace TinySTL{
 	list<T>::list(size_type n, const value_type& val = value_type()){
 		ctorAux(n, val, std::is_integral<value_type>());
 	}
+	template <class T>
 	template<class InputIterator>
 	list<T>::list(InputIterator first, InputIterator last){
-		ctorAux(first, last, std::is_intergral<InputIterator>());
+		ctorAux(first, last, std::is_integral<InputIterator>());
 	}
 	template <class T>
 	list<T>::list(const list& l){
 		head.p = newNode(); //头结点
 		tail.p = head.p;
-		for(auto node = l.head.p; node != l.tail.p; node = node->next){
-			push_back(node->data);
+		for(nodePtr node = l.head.p; node != l.tail.p; node = node->next){
+			insert(tail, node->data);
 		}
 	}
 
 	template <class T>
-	list<T>::list& operator=(const list& l){
+	list<T>& list<T>::operator=(const list& l){
 		if(this != &l){
 			list(l).swap(*this);
 		}
@@ -135,11 +138,11 @@ namespace TinySTL{
 
 	//迭代器---------------------------------------------------------------
 	template <class T>
-	typename list<T>::iterator list<T>::begin() const{
+	typename list<T>::iterator list<T>::begin(){
 		return head;
 	}
 	template <class T>
-	typename list<T>::iterator list<T>::end() const{
+	typename list<T>::iterator list<T>::end(){
 		return tail;
 	}
 	
@@ -166,7 +169,7 @@ namespace TinySTL{
 	//容量----------------------------------------------------------------------------
 	template <class T>
 	typename list<T>::size_type list<T>::size() const{
-		siez_type length = 0;
+		size_type length = 0;
 		for(iterator it = head; it != tail; ++it){
 			++length;
 		}
@@ -204,13 +207,10 @@ namespace TinySTL{
 	}
 
 	template <class T>
-	void list<T>::insert(iterator pos, const value_type& val){
+	typename list<T>::iterator list<T>::insert(iterator pos, const value_type& val){
 		if(pos == begin()){
 			push_front(val);
 			return begin();
-		} else if(pos == end()){
-			push_back(val);
-			return pos;
 		}
 		auto node = newNode(val);
 		auto prev = pos.p->prev;

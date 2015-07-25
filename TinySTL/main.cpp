@@ -4,11 +4,13 @@
 #include "Profiler\Profiler.h"
 
 #include "Test\VectorTest.h"
+#include "Test\ListTest.h"
 
 using namespace TinySTL::Profiler;
 
 int main(){
-	TinySTL::VectorTest::testAllCases();
+	//TinySTL::VectorTest::testAllCases();
+	TinySTL::ListTest::testCase1();
 
 	getchar();
 	return 0;

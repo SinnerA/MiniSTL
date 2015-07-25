@@ -79,8 +79,8 @@ namespace TinySTL{
 		~list();
 
 		//µü´úÆ÷
-		iterator begin() const;
-		iterator end() const;
+		iterator begin();
+		iterator end();
 		const_iterator begin() const;
 		const_iterator end() const;
 		//reverse_iterator rbegin() const;
