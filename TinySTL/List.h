@@ -145,6 +145,14 @@ namespace TinySTL{
 		void insert_aux(iterator pos, size_type n, const value_type& val, std::true_type);
 		template <class InputIterator>
 		void insert_aux(iterator pos, InputIterator first, InputIterator last, std::false_type);
+	public:
+		template <class T>
+		friend void swap(list<T>& x, list<T>& y);
+		//比较相关
+		template <class T>
+		friend void operator==(const list<T>& lhs, const list<T>& rhs);
+		template <class T>
+		friend void operator!=(const list<T>& lhs, const list<T>& rhs);
 	};
 }
 #endif

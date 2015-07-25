@@ -263,6 +263,10 @@ namespace TinySTL{
 		TinySTL::swap(head.p, x.head.p);
 		TinySTL::swap(tail.p, x.tail.p);
 	}
+	template <class T>
+	void swap(list<T>& x, list<T>& y){
+		x.swap(y);
+	}
 
 	template <class T>
 	void list<T>::splice(iterator pos, list& x){
@@ -431,8 +435,30 @@ namespace TinySTL{
 		head.p->prev = nullptr;
 		while(curNode != head.p){
 			nodePtr nextNode = curNode->next;
-			curNode->next = 
+			curNode->next = head.p->next;
+			head.p->next->prev = curNode;
+			head.p->next = curNode;
+			curNode->prev = head.p;
+			curNode = nextNode;
 		}
+	}
+
+	//±È½Ï----------------------------------------------------------------------------
+	template <class T>
+	void operator==(const list<T>& lhs, const list<T>& rhs){
+		nodePtr node1 = lhs.head.p, node2 = rhs.head.p;
+		for(; node1 != lhs.tail.p && node2 != rhs.tail.p; node1 = node1->next, node2 = node2->next){
+			if(node1->data != node2->data)
+				break;
+		}
+		if(node1 == lhs.tail.p && node2 == rhs.tail.p)
+			return true;
+		else
+			return false;
+	}
+	template <class T>
+	void operator!=(const list<T>& lhs, const list<T>& rhs){
+		return !(lhs == rhs);
 	}
 }
 #endif
