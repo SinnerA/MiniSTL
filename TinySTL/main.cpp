@@ -9,8 +9,8 @@
 using namespace TinySTL::Profiler;
 
 int main(){
-	//TinySTL::VectorTest::testAllCases();
-	TinySTL::ListTest::testCase1();
+	TinySTL::VectorTest::testAllCases();
+	TinySTL::ListTest::testAllCases();
 
 	getchar();
 	return 0;

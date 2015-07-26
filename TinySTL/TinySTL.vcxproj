@@ -69,6 +69,7 @@
     <ClInclude Include="Construct.h" />
     <ClInclude Include="Detail\List.impl.h" />
     <ClInclude Include="Detail\Vector.impl.h" />
+    <ClInclude Include="Functional.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Profiler\Profiler.h" />
