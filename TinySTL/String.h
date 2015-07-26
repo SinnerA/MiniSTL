@@ -30,12 +30,12 @@ namespace TinySTL{
 	public:
 		//构造，拷贝赋值和析构
 		string():start_(0), finish_(0), endOfStorge_(0){}
-		string(size_t n, char c);
+		string(size_type n, char c);
 		string(const char* s);
-		string(const char* s, size_t n);
+		string(const char* s, size_type n);
 		string(const string& str);
 		string(string&& str);
-		string(const string& str, size_t pos, size_t len = npos);
+		string(const string& str, size_t pos, size_type len = npos);
 		template <class InputIterator>
 		string(InputIterator first, InputIterator last);
 
@@ -47,6 +47,35 @@ namespace TinySTL{
 		~string();
 
 		//迭代器
+		iterator begin(){ return start_; }
+		iterator end() { return finish_; }
+		const_iterator begin() const{ return start_; }
+		const_iterator end() const{ return finish_; }
+		reverse_iterator rbegin(){ return reverse_iterator(finish_); }
+		reverse_iterator rend(){ return reverse_iterator(start_); }
+		const_reverse_iterator rbegin() const{ return const_reverse_iterator(finish_); }
+		const_reverse_iterator rend() const{ return const_reverse_iterator(start_); }
+		const_iterator cbegin() const{ return start_; }
+		const_iterator cend() const{ return finish_; }
+		const_reverse_iterator crbegin() const{ return const_reverse_iterator(finish_); }
+		const_reverse_iterator crend() const{ return const_reverse_iterator(start_); }
+
+		//访问元素
+		char& operator[] (size_t pos){ return *(start_ + pos); }
+		const char& operator[] (size_t pos) const{ return *(start_ + pos); }
+		char& back(){ return *(finish_ - 1); }
+		const char& back() const{ return *(finish_ - 1); }
+		char& front(){ return *(start_); }
+		const char& front() const{ return *(start_); }
+
+		//容量
+		size_type size() const{ return finish_ - start_; }
+		size_type length() const{ return size(); }
+		size_type capacity() const{ return endOfStorage_ - start_; }
+		bool empty() const{ return begin() == end(); }
+
+		//修改容器
+		
 	}
 }
 #endif
