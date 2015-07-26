@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include "Utility.h"
+#include "Functional.h"
 
 namespace TinySTL{
 	//fill--------------------------------------------------------------------
