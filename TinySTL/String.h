@@ -9,7 +9,7 @@
 #include "UninitializedFunctions.h"
 #include "Utility.h"
 
-namespace TinySTL{
+namespace TinySTL{ 
 	class string{
 	public:
 		typedef char                                   value_type;
